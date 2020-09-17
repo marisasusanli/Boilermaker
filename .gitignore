@@ -1,3 +1,7 @@
 node_modules
-bundle.js
-bundle.js.map
+
+# assumes your bundle.js will be in a folder called public
+public/bundle.js
+public/bundle.js.map
+
+.DS_Store
