@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const Puppy = require('../db/puppy');
 
 // matches GET requests to /api/puppies/
 router.get('/', async (req, res, next) => {

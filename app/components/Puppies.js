@@ -45,7 +45,11 @@ class Puppies extends React.Component {
           <h2>Current Puppies:</h2>
           <ul>
             {allPuppies.length
-              ? allPuppies.map((pup) => <li key={pup.id}>Name:{pup.name}</li>)
+              ? allPuppies.map((pup) => (
+                  <li key={pup.id}>
+                    {pup.name} is a {pup.age} year old
+                  </li>
+                ))
               : 'There are no puppies registered in the database.'}
           </ul>
         </div>
