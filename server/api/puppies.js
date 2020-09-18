@@ -1,8 +1,13 @@
 const router = require('express').Router();
 
 // matches GET requests to /api/puppies/
-router.get('/', function (req, res, next) {
-  /* etc */
+router.get('/', async (req, res, next) => {
+  try {
+    const puppies = await Puppy.findAll();
+    res.json(puppies);
+  } catch (err) {
+    next(err);
+  }
 });
 // matches POST requests to /api/puppies/
 router.post('/', function (req, res, next) {
