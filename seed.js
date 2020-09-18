@@ -1,21 +1,18 @@
 const { green, red } = require('chalk');
-const { db, Puppy } = require('./server/db');
+const { db, User } = require('./server/db');
 
-const puppies = [
-  { name: 'Lucky', age: 1 },
-  { name: 'Spot', age: 2 },
-  { name: 'Rocko', age: 1 },
-  { name: 'Fuzzy', age: 2 },
-  { name: 'Oscar', age: 3 },
+const users = [
+  { email: 'cody@email.com', password: '12345' },
+  { email: 'jamie@email.com', password: '12345' },
+  { email: 'lucy@email.com', password: '67890' },
 ];
 
 const seed = async () => {
   try {
     await db.sync({ force: true });
-
     await Promise.all(
-      puppies.map((puppy) => {
-        return Puppy.create(puppy);
+      users.map((user) => {
+        return User.create(user);
       })
     );
   } catch (err) {

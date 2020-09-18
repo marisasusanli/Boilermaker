@@ -1,6 +1,9 @@
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
+const session = require('express-session');
+const passport = require('passport');
+const User = require('./db/user');
 
 const app = express();
 
@@ -15,8 +18,36 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// session middleware - MUST come before routing middleware
+// enter your secret here
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'a wildly insecure secret',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+// passport middleware - MUST come after session middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// passport registration
+passport.serializeUser((user, done) => done(null, user.id));
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findByPk(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
+
+// routing middleware
 // api routes
 app.use('/api', require('./api')); // matches all requests to /api
+app.use('/auth', require('./auth')); // matches all requests to /auth
 
 // Make sure this is right at the end of your server logic!
 // The only thing after this might be a piece of middleware to serve up 500 errors for server problems
