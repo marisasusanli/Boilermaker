@@ -3,7 +3,7 @@ const User = require('../db/user');
 
 // #4 section - in boilermaker authentication
 // check currently-authenticated user, i.e. "who am I?"
-// for requests sent to '/auth/me'
+// this is for requests sent to '/auth/me'
 router.get('/me', (req, res) => {
   res.json(req.user);
 });
@@ -26,7 +26,7 @@ router.post('/signup', async (req, res, next) => {
 // #1 section - in boilermaker authentication
 // DOUBLE CHECK THIS SHOULD BE ROUTER.PUT ?
 // login, i.e. "you remember `me`, right?"
-// for requests sent to '/auth/login'
+// this is for requests sent to '/auth/login'
 router.put('/login', async (req, res, next) => {
   try {
     const user = await User.findOne({ where: { email: req.body.email } });
@@ -47,13 +47,13 @@ router.put('/login', async (req, res, next) => {
 // #3 section - in boilermaker authentication
 // DOUBLE CHECK THIS SHOULD BE ROUTER.DELETE ?
 // logout, i.e. "please just forget `me`"
-// for requests sent to '/auth/logout'
+// this is for requests sent to '/auth/logout'
 router.delete('/logout', (req, res) => {
   req.logout();
   req.session.destroy();
   res.sendStatus(204); // or res.redirect('/')
 });
 
-// router.use('/google', googleRouter);
+router.use('/google', require('./google'));
 
 module.exports = router;

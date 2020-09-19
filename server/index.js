@@ -7,6 +7,10 @@ const User = require('./db/user');
 
 const app = express();
 
+// create file called secrets.js in the root folder to store API keys
+// add file to .gitignore so it does not get tracked on Github
+if (process.env.NODE_ENV !== 'production') require('../secrets');
+
 // logging middleware
 app.use(morgan('dev'));
 
